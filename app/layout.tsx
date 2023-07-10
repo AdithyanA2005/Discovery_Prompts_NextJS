@@ -14,9 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="night">
       <body className={inter.className}>
-        <div className="max-w-7xl mx-auto">
+        <div className="w-[95%] md:w-[90%] lg:w-[80%] mx-auto ">
           <Navbar />
-          <main className="px-2">
+
+          <main>
             {children}
           </main>
         </div>
