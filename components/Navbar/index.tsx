@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SpecialBtn from "./SpecialBtn";
 
 export default function Navbar() {
   const isLoggedIn = false;
@@ -16,14 +17,14 @@ export default function Navbar() {
         {isLoggedIn ? (
           <div className="flex items-center">
             {/* WRITE NEW PROMPT BTN */}
-            <button className="btn btn-outline btn-accent btn-sm py-3 h-auto text-xs mr-2">Write New Prompt</button>
+            <SpecialBtn text="Write New Prompt" />
 
             {/* ACCOUNT ACTIONS */}
             <div className="dropdown dropdown-end">
               {/* Avatar Btn */}
               <button className={`btn btn-circle avatar flex ${!hasAvatar && "placeholder"}`}>
                 <div className={`w-full rounded-full ${!hasAvatar && "bg-neutral-focus text-accent"}`}>
-                  {hasAvatar 
+                  {hasAvatar
                     ? <img src="/path/to/image" />
                     : <span className="block text-xs">AA</span>
                   }
@@ -43,7 +44,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div>
-
+            <SpecialBtn text="Start Discovering" />
           </div>
         )}
       </div>
