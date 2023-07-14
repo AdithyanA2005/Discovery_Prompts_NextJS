@@ -16,11 +16,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-theme="night">
       <body className={inter.className}>
         <div className="w-[95%] md:w-[90%] lg:w-[80%] mx-auto ">
+            <div className="min-h-screen">
           <Navbar />
 
           <main>
             {children}
           </main>
+            </div>
 
           <Footer />
         </div>
