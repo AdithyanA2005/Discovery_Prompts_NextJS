@@ -9,8 +9,8 @@ type Props = {
 export default function AccountActionsDropdown({ userName, userImage}: Props) {
   // This function will retunn the intials for a given name 
   const getInitials = (name: string): string => {
-    const names = name.split(' ');
-    const initials = names.map(n => n.charAt(0).toUpperCase()).join('');
+    const names = name.split(" ");
+    const initials = names.map(n => n.charAt(0).toUpperCase()).join("");
     return initials || "😊";
   };
 
