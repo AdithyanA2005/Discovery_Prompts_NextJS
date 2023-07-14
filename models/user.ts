@@ -1,5 +1,5 @@
-import { Document } from 'mongodb';
-import { Model, Schema, model, models } from 'mongoose';
+import { Document } from "mongodb";
+import { Model, Schema, model, models } from "mongoose";
 
 export interface IUser extends Document {
   name: string;
