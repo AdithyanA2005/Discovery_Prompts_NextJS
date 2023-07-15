@@ -45,7 +45,8 @@ export default function Navbar() {
             {/* Write new prompt button */}
             <SpecialBtn
               text="Write New Prompt"
-              onClickHandle={() => { }}
+              onClick={() => { }}
+              disabled={false}
             />
 
             {/* Account actions dropdown with profile img btn*/}
@@ -56,13 +57,11 @@ export default function Navbar() {
           </div>
         ) : (
           <div>
-            {providers && Object.values(providers).map((provider) => (
-              <SpecialBtn
-                text="Start Discovering"
-                key={provider.name}
-                onClickHandle={() => signIn(provider.id)}
-              />
-            ))}
+            <SpecialBtn
+              text="Start Discovering"
+              onClick={() => signIn(providers?.google.id)}
+              disabled={!providers || !providers.google}
+            />
           </div>
         )}
       </div>
