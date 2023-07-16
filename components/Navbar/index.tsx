@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProviders, signIn, useSession } from "next-auth/react";
@@ -46,11 +45,13 @@ export default function Navbar() {
         {status === "authenticated" ? (
           <div className="flex items-center">
             {/* Write new prompt button */}
-            <SpecialBtn
-              text="Write New Prompt"
-              onClick={() => router.push("/new-prompt")}
-              disabled={false}
-            />
+            {pathname !== "/new-prompt" && (
+              <SpecialBtn
+                text="Write New Prompt"
+                onClick={() => router.push("/new-prompt")}
+                disabled={false}
+              />
+            )}
 
             {/* Account actions dropdown with profile img btn*/}
             <AccountActionsDropdown
