@@ -1,11 +1,13 @@
 "use client"
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProviders, signIn, useSession } from "next-auth/react";
 import SpecialBtn from "./SpecialBtn";
 import AccountActionsDropdown from "./AccountActionsDropdown";
+import BackBtn from "./BackBtn";
+import NavBrand from "./NavBrand";
 
 interface NextAuthProvidersResponse {
   [provider: string]: {
@@ -19,6 +21,7 @@ interface NextAuthProvidersResponse {
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session, status } = useSession();
   const [providers, setProviders] = useState<NextAuthProvidersResponse | null>(null);
 
@@ -34,13 +37,11 @@ export default function Navbar() {
 
   return (
     <nav className="navbar justify-between mt-2 h-10 bg-base-100">
-      {/* Navbrand */}
-      <Link href="/" className="btn btn-ghost hover:border btn-accent hover:text-accent outline-none font-bold">
-        <span className="text-lg sm:text-lg hidden sm:block">Discovery Prompts</span>
-        <span className="text-2xl sm:hidden font-serif">DP</span>
-      </Link>
+      <div>
+        {pathname !== "/" && <BackBtn />}
+        <NavBrand />
+      </div>
 
-      {/* Actions */}
       <div className="flex-none">
         {status === "authenticated" ? (
           <div className="flex items-center">
