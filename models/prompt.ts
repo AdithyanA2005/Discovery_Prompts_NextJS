@@ -1,11 +1,5 @@
-import { Document } from "mongodb";
+import { IPrompt } from "@/types/prompt";
 import { Model, Schema, Types, model, models } from "mongoose";
-
-export interface IPrompt extends Document {
-  creator: Types.ObjectId;
-  prompt: string;
-  tag: string;
-}
 
 const promptSchema: Schema<IPrompt> = new Schema<IPrompt>({
   creator: {
