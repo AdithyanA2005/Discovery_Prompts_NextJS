@@ -20,7 +20,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
 
   return (
     <section className="px-1.5 my-[3vh] sm:my-[5vh] w-full max-w-3xl text-white">
-      <h1 className="mb-6 text-accent font-bold text-2xl capitalize sm:text-3xl">
+      <h1 className="text-primary mb-6 font-bold text-2xl capitalize sm:text-3xl">
         {type} Your Prompt
       </h1>
 
@@ -34,7 +34,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
             value={prompt}
             onChange={handlePromptChange}
             required={true}
-            className="textarea textarea-accent w-full bg-gray-900"
+            className="textarea textarea-primary w-full bg-gray-900"
             placeholder="Write your post here"
           />
         </div>
@@ -45,7 +45,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
           <input
             id="tag"
             type="text"
-            className="input input-bordered input-accent w-full bg-gray-900"
+            className="input input-bordered input-primary w-full bg-gray-900"
             value={tag}
             placeholder='#Tag'
             required={true}
@@ -56,12 +56,12 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
         {/* Action Buttons */}
         <div className="mt-4 flex gap-4">
           {/* Submit button */}
-          <button type="submit" disabled={submitting} className="btn btn-accent font-semibold">
+          <button type="submit" disabled={submitting} className="btn btn-primary btn-outline font-semibold">
             {submitting ? "Creating Prompt ..." : "Create Prompt"}
           </button>
 
           {/* Reset button */}
-          <button type="reset" className="btn btn-ghost btn-accent">
+          <button type="reset" className="btn text-accent btn-ghost btn-primary">
             Cancel
           </button>
         </div>
