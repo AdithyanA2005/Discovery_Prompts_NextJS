@@ -2,8 +2,9 @@ import NextAuth from "next-auth/next";
 import { Profile, Session } from "next-auth";
 import { Provider } from "next-auth/providers";
 import GoogleProvider from "next-auth/providers/google";
-import User, { IUser } from "@/models/user";
+import User from "@/models/user";
 import { connectToDB } from "@/utils/database";
+import { IUser } from "@/types/user";
 
 // Next Auth Providers - Google(Auth0)
 const providers: Provider[] = [
