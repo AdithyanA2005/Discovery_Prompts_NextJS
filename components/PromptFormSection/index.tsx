@@ -19,7 +19,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
   });
 
   return (
-    <section className="px-1.5 my-[3vh] sm:my-[5vh] w-full max-w-3xl text-white">
+    <section className="px-1.5 my-[3vh] sm:my-[5vh] w-full max-w-4xl mx-auto text-white">
       <h1 className="text-primary mb-6 font-bold text-2xl capitalize sm:text-3xl">
         {type} Your Prompt
       </h1>
