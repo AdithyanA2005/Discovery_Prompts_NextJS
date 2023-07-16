@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getProviders, signIn, useSession } from "next-auth/react"
+import { getProviders, signIn, useSession } from "next-auth/react";
 import SpecialBtn from "./SpecialBtn";
 import AccountActionsDropdown from "./AccountActionsDropdown";
 
@@ -17,6 +18,7 @@ interface NextAuthProvidersResponse {
 }
 
 export default function Navbar() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [providers, setProviders] = useState<NextAuthProvidersResponse | null>(null);
 
@@ -45,7 +47,7 @@ export default function Navbar() {
             {/* Write new prompt button */}
             <SpecialBtn
               text="Write New Prompt"
-              onClick={() => { }}
+              onClick={() => router.push("/new-prompt")}
               disabled={false}
             />
 
