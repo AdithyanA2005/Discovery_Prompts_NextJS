@@ -10,9 +10,10 @@ import CopyBtn from "./CopyBtn";
 
 type Props = {
   prompt: IPromptWithCreatorPopulated;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function PromptCard({ prompt }: Props) {
+export default function PromptCard({ prompt, setSearch }: Props) {
   const router = useRouter();
   const pathName = usePathname();
   const { data: session } = useSession();
@@ -30,7 +31,7 @@ export default function PromptCard({ prompt }: Props) {
   };
 
   const handleTagClick = () => {
-
+    setSearch(prompt.tag);
   };
 
   const handleEditClick = () => {
@@ -61,7 +62,7 @@ export default function PromptCard({ prompt }: Props) {
       </h2>
 
       {/* The Tags */}
-      <p className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent text-sm cursor-pointer">
+      <p onClick={handleTagClick} className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent text-sm cursor-pointer">
         {prompt.tag}
       </p>
 

@@ -99,7 +99,7 @@ export default function FeedsSection({ }: Props) {
       </form>
 
       {/* Prompt Card List */}
-      <PromptCardList prompts={filteredPrompts} />
+      <PromptCardList setSearch={setSearchQuery} prompts={filteredPrompts} />
     </section>
   )
 }
