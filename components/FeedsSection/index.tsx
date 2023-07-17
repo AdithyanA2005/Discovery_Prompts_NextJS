@@ -11,6 +11,10 @@ export default function FeedsSection({ }: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   let filteredPrompts: IPromptWithCreatorPopulated[] = prompts;
 
+  const handleInputsBtnClick = () => {
+    if (searchQuery) setSearchQuery("");
+  }
+
   // Fetch prompts when page is loaded
   useEffect(() => {
     const fetchPosts = async () => {
@@ -86,17 +90,27 @@ export default function FeedsSection({ }: Props) {
   return (
     <section className="mt-16 w-full flex flex-col items-center">
       {/* Search Bar */}
-      <form className="relative w-full flex items-center max-w-lg">
+      <div className="relative w-full flex items-center max-w-lg">
         <input
           type="text"
-          placeholder="Search Prompts, #tag or @user"
+          placeholder="Search Prompts or #tag or @user"
           className="input input-bordered input-accent w-full"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          required={true}
         />
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-      </form>
+
+        <button className="hover:text-accent hover:scale-105 duration-300 animate-all absolute right-2 h-5 w-5 grid place-items-center" onClick={handleInputsBtnClick}>
+          {searchQuery ? (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* Prompt Card List */}
       <PromptCardList setSearch={setSearchQuery} prompts={filteredPrompts} />
