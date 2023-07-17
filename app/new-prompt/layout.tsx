@@ -1,5 +1,6 @@
 "use client"
 
+import Loader from "@/components/Loader";
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -15,6 +16,6 @@ export default function NewPromptLayout({ children }: { children: React.ReactNod
   return (
     session?.user
       ? children
-      : <div className="flex justify-center mt-16"><span className="bg-primary loading loading-bars loading-lg mx-auto"></span></div>
+      : <Loader/>
   )
 }

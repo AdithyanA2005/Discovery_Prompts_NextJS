@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PromptCardList from "../PromptCardList";
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
+import Loader from "../Loader";
 
 type Props = {}
 
@@ -18,7 +19,7 @@ export default function FeedsSection({ }: Props) {
   // Fetch prompts when page is loaded
   useEffect(() => {
     const fetchPosts = async () => {
-      const response: Response = await fetch("/api/prompt");
+      const response: Response = await fetch("/api/prompt", { next: { revalidate: 60 } });
       const data: IPromptWithCreatorPopulated[] = await response.json();
       setPrompts(data);
     };;
@@ -113,7 +114,10 @@ export default function FeedsSection({ }: Props) {
       </div>
 
       {/* Prompt Card List */}
-      <PromptCardList setSearch={setSearchQuery} prompts={filteredPrompts} />
+      {prompts.length === 0 
+        ? <Loader />
+        : <PromptCardList setSearch={setSearchQuery} prompts={filteredPrompts} />
+      }
     </section>
   )
 }
