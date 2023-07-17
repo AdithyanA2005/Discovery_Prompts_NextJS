@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
+import { ETag } from "@/types/tag";
 
 type Props = {
   type: string;
@@ -13,10 +14,8 @@ type Props = {
 
 export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt, submitting, handleReset, handleSubmit }: Props) {
   const handlePromptChange = (e: ChangeEvent<HTMLTextAreaElement>) => setPrompt(e.target.value);
-  const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => setTag(() => {
-    if (e.target.value[0] !== "#") return `#${e.target.value}`;
-    return e.target.value;
-  });
+  const handleTagChange = (e: ChangeEvent<HTMLSelectElement>) => setTag(e.target.value);
+  const tagOptions = Object.values(ETag);
 
   return (
     <section className="px-1.5 my-[3vh] sm:my-[5vh] w-full max-w-4xl mx-auto text-white">
@@ -34,23 +33,33 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
             value={prompt}
             onChange={handlePromptChange}
             required={true}
-            className="textarea textarea-primary w-full bg-gray-900"
+            className="textarea textarea-primary w-full placeholder:text-white bg-gray-900"
             placeholder="Write your post here"
           />
         </div>
 
-        {/* Tags Input */}
+        {/* Tag Input */}
         <div>
           <label htmlFor="tag" className="block ml-2 mb-2">Tag</label>
-          <input
+
+          <select
             id="tag"
-            type="text"
-            className="input input-bordered input-primary w-full bg-gray-900"
             value={tag}
             placeholder='#Tag'
             required={true}
             onChange={handleTagChange}
-          />
+            className="select select-primary w-full bg-gray-900"
+          >
+            <option className="text-gray-300" disabled value="">
+              Pick your #tag
+            </option>
+
+            {tagOptions.map((option) => (
+              <option className="p-4 border border-accent" key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Action Buttons */}
