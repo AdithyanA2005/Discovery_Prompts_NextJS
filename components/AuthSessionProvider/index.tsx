@@ -10,7 +10,7 @@ type Props = {
 }
 
 // Next Auth Session Provider Component
-export default function Provider({ children, session }: Props) {
+export default function AuthSessionProvider({ children, session }: Props) {
   return (
     <SessionProvider session={session}>
       {children}

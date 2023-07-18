@@ -15,16 +15,12 @@ export default function CreatorDetails({ name, email, imgSrc, handleProfileClick
         alt="Creator"
         width={40}
         height={40}
-        className='rounded-full object-contain'
+        className="rounded-full object-contain"
       />
 
-      <div className='flex flex-col'>
-        <h3 className='font-semibold text-[1.1rem] text-gray-200'>
-          {name}
-        </h3>
-        <p className='font-inter text-xs text-gray-300'>
-          {email}
-        </p>
+      <div className="flex flex-col">
+        <h3 className="font-semibold text-[1.1rem] text-gray-200"> {name} </h3>
+        <p className="font-inter text-xs text-gray-300"> {email} </p>
       </div>
     </div>
   )

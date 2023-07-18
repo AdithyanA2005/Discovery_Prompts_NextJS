@@ -1,46 +1,49 @@
 "use client"
 
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CreatorDetails from "./CreatorDetails";
 import CopyBtn from "./CopyBtn";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
 type Props = {
   prompt: IPromptWithCreatorPopulated;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function PromptCard({ prompt, setSearch }: Props) {
+export default function PromptCard({ prompt, setSearchValue }: Props) {
   const router = useRouter();
   const pathName = usePathname();
   const { data: session } = useSession();
+
+  // This will store if the prompt is copied
   const [copied, setCopied] = useState<boolean>(false);
 
+  // This function will set copied state to true for 2 seconds and also copy the content
   const handleCopyPrompt = () => {
     setCopied(true);
     navigator.clipboard.writeText(prompt.prompt);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // When CreatorsDetails is clicked redirect to the necessary page
   const handleProfileClick = () => {
     if (prompt.creator._id === session?.user.id) router.push("/profile");
     else router.push(`/profile/${prompt.creator?._id}?name=${prompt.creator.name}`);
   };
 
+  // Set search value to the tag when a tag is clicked
   const handleTagClick = () => {
-    setSearch(prompt.tag);
-  };
+    setSearchValue(prompt.tag);
+  }
 
-  const handleEditClick = () => {
+  // Things to do when Edit button is clicked
+  const handleEditClick = () => { };
 
-  };
-
-  const handleDeleteClick = () => {
-
-  };
+  // Things to do when Delete button is clicked
+  const handleDeleteClick = () => { };
 
   return (
     <div className="relative group break-inside-avoid bg-clip-padding backdrop-blur-lg backdrop-filter bg-primary bg-opacity-5 flex-1 p-6 pb-4 border rounded-lg border-primary">
