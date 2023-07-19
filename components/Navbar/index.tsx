@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -69,6 +69,6 @@ export default function Navbar() {
           </div>
         )}
       </div>
-    </nav >
-  )
+    </nav>
+  );
 }

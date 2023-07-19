@@ -5,7 +5,7 @@ type Props = {
   link: `https://${string}`;
   title: string;
   children: ReactNode;
-}
+};;
 
 export default function IconWrapper({ link, title, children }: Props) {
   return (
@@ -14,5 +14,5 @@ export default function IconWrapper({ link, title, children }: Props) {
         {children}
       </Link>
     </div>
-  )
+  );
 }

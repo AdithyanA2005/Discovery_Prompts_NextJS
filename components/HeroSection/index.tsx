@@ -2,7 +2,7 @@ type Props = {
   heading: string;
   headingSpecial: string;
   description: string;
-}
+};
 
 export default function HeroSection({ heading, headingSpecial, description }: Props) {
   return (
@@ -19,6 +19,6 @@ export default function HeroSection({ heading, headingSpecial, description }: Pr
         {description}
       </p>
     </section>
-  )
+  );
 }
 

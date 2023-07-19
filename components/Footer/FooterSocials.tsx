@@ -1,6 +1,6 @@
 import IconWrapper from "./IconWrapper";
 
-type Props = {}
+type Props = {};
 
 export default function FooterSocials({ }: Props) {
   return (
@@ -29,5 +29,5 @@ export default function FooterSocials({ }: Props) {
         </IconWrapper>
       </div>
     </div>
-  )
+  );
 }

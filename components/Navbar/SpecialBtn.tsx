@@ -2,7 +2,7 @@ type Props = {
   text: string;
   disabled: boolean;
   onClick: () => void;
-}
+};
 
 export default function SpecialBtn({ text, onClick, disabled }: Props) {
   return (
@@ -15,5 +15,5 @@ export default function SpecialBtn({ text, onClick, disabled }: Props) {
         {text}
       </button>
     </div>
-  )
+  );
 }

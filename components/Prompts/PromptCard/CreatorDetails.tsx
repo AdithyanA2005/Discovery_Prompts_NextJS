@@ -4,12 +4,15 @@ type Props = {
   name: string;
   email: string;
   imgSrc: string;
-  handleProfileClick: () => void;
-}
+  handleOnClick: () => void;
+};
 
-export default function CreatorDetails({ name, email, imgSrc, handleProfileClick }: Props) {
+export default function CreatorDetails({ name, email, imgSrc, handleOnClick }: Props) {
   return (
-    <div onClick={handleProfileClick} className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+    <div
+      onClick={handleOnClick}
+      className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+    >
       <Image
         src={imgSrc}
         alt="Creator"
@@ -23,5 +26,5 @@ export default function CreatorDetails({ name, email, imgSrc, handleProfileClick
         <p className="font-inter text-xs text-gray-300"> {email} </p>
       </div>
     </div>
-  )
+  );
 }
