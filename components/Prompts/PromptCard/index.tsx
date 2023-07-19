@@ -1,7 +1,7 @@
 "use client";
 
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
-import { redirect, usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import CreatorActions from "./CreatorActions";
@@ -16,6 +16,9 @@ type Props = {
 };
 
 export default function PromptCard({ prompt, setSearchValue }: Props) {
+  // Define router to navigate within pages
+  const router = useRouter();
+
   // Define the current route path
   const pathName = usePathname();
 
@@ -35,10 +38,10 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
   // Redirect user to appropriate profile page
   const redirectToProfiePage = () => {
     // If user himself is the creator
-    if (prompt.creator._id === session?.user.id) redirect("/profile");
+    if (prompt.creator._id === session?.user.id) router.push("/profile");
 
     // If the cretor is not the user himself
-    redirect(`/profile/${prompt.creator?._id}?name=${prompt.creator.name}`);
+    router.push(`/profile/${prompt.creator?._id}?name=${prompt.creator.name}`);
   };
 
   // Set search value to the tag when a tag is clicked
