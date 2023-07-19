@@ -46,7 +46,7 @@ export default function Prompts({ prompts, searchValue, setSearchValue }: Props)
 
       {/* Prompt Cards List */}
       {prompts.length ? (
-        <div className="mt-12 max-w-7xl w-full space-y-5 py-8 sm:columns-2 xl:columns-3">
+        <div className="mt-12 w-full space-y-5 py-8 sm:columns-2 xl:columns-3">
           {prompts.map((prompt) => (
             <PromptCard key={prompt._id} prompt={prompt} setSearchValue={setSearchValue} />
           ))}
