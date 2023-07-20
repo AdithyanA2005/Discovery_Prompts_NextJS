@@ -30,7 +30,7 @@ export default function NewPromptPage({ }: {}) {
       // Call the api
       const reqBody: ICreatePromptRequestBody = { userId: session?.user.id || "", prompt, tag };
       const reqConfig: RequestInit = { method: "POST", body: JSON.stringify(reqBody) };
-      const response: Response = await fetch("/api/prompt/new", reqConfig);
+      const response: Response = await fetch("/api/prompts/new", reqConfig);
 
       // Return to homepage if request is successfull
       if (response.ok) router.push("/");
