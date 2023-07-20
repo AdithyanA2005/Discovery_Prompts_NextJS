@@ -3,14 +3,16 @@
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import { ChangeEvent } from "react";
 import PromptCard from "./PromptCard";
+import Loader from "../Loader";
 
 type Props = {
+  loading: boolean;
   prompts: IPromptWithCreatorPopulated[];
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Prompts({ prompts, searchValue, setSearchValue }: Props) {
+export default function Prompts({ prompts, loading, searchValue, setSearchValue }: Props) {
   const clearSearchValue = () => setSearchValue("");
   const searchValueOnChange = (e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value);
 
@@ -44,16 +46,20 @@ export default function Prompts({ prompts, searchValue, setSearchValue }: Props)
         </button>
       </div>
 
+      {/* When prompts are not loaded */}
+      {loading && <Loader />}
+
       {/* Prompt Cards List */}
-      {prompts.length ? (
-        <div className="mt-12 w-full space-y-5 py-8 sm:columns-2 xl:columns-3">
-          {prompts.map((prompt) => (
-            <PromptCard key={prompt._id} prompt={prompt} setSearchValue={setSearchValue} />
-          ))}
-        </div>
-      ) : (
-        <span className="mt-14 text-accent">No Prompts Found</span>
-      )}
+      {!loading && (
+        prompts.length ? (
+          <div className="mt-12 w-full space-y-5 py-8 sm:columns-2 xl:columns-3">
+            {prompts.map((prompt) => (
+              <PromptCard key={prompt._id} prompt={prompt} setSearchValue={setSearchValue} />
+            ))}
+          </div>
+        ) : (
+          <span className="mt-14 text-accent">No Prompts Found</span>
+        ))}
     </section>
   );
 }

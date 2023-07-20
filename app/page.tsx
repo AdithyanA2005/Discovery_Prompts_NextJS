@@ -1,11 +1,7 @@
 import FeedsSection from "@/components/FeedsSection";
 import HeroSection from "@/components/HeroSection";
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
-import { fetchPrompts } from "@/utils/api";
 
 export default async function Page() {
-  const initialPrompts: IPromptWithCreatorPopulated[] = await fetchPrompts();
-
   return (
     <>
       {/* Hero Section */}
@@ -16,9 +12,7 @@ export default async function Page() {
       />
 
       {/* Prompt Feeds Section */}
-      <FeedsSection
-        initialPrompts={initialPrompts}
-      />
+      <FeedsSection />
     </>
   )
 }

@@ -6,13 +6,14 @@ import { fetchPrompts } from "@/utils/api";
 import { useEffect, useState } from "react";
 import Prompts from "../Prompts";
 
-type Props = {
-  initialPrompts: IPromptWithCreatorPopulated[] | [];
-}
+type Props = {};
 
-export default function FeedsSection({ initialPrompts }: Props) {
-  // State variables to store prompts that are to be displayed
-  const [prompts, setPrompts] = useState<IPromptWithCreatorPopulated[] | []>(initialPrompts);
+export default function FeedsSection({ }: Props) {
+  // State variable to denote if prompts are being loaded
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // State variable to store prompts that are to be displayed
+  const [prompts, setPrompts] = useState<IPromptWithCreatorPopulated[]>([]);
 
   // State variable to store the query of the prompts search bar
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -23,8 +24,10 @@ export default function FeedsSection({ initialPrompts }: Props) {
   // Fetch fresh prompts when a page is loaded
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       const data = await fetchPrompts();
       setPrompts(data);
+      setLoading(false);
     };
 
     fetchPosts();
@@ -33,6 +36,7 @@ export default function FeedsSection({ initialPrompts }: Props) {
   return (
     <Prompts
       prompts={filteredPrompts}
+      loading={loading}
       searchValue={searchQuery}
       setSearchValue={setSearchQuery}
     />
