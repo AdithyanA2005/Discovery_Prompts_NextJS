@@ -65,14 +65,16 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
       {/* This will show the main prompt and by clicking it you can copy its content to clipboard */}
       <Prompt text={prompt.prompt} handleOnClick={copyPromptContent} />
 
-      {/* This will show the tag of the current prompt and when clicked on it it wil search for prompts with the same tag */}
-      <Tag text={prompt.tag} handleOnClick={searchForCurrentTag} />
+      <div className="flex justify-between">
+        {/* This will show the tag of the current prompt and when clicked on it it wil search for prompts with the same tag */}
+        <Tag text={prompt.tag} handleOnClick={searchForCurrentTag} />
 
-      {/* TODO: Implement `Edit` & `Delete` functionalitites */}
-      {/* Profile Page Only Edit and Delete Btns*/}
-      {session?.user.id === prompt.creator?._id && pathName === "/profile" && (
-        <CreatorActions handleDeleteOnClick={() => {}} handleEditOnClick={() => {}} />
-      )}
+        {/* TODO: Implement `Edit` & `Delete` functionalitites */}
+        {/* Profile Page Only Edit and Delete Btns*/}
+        {session?.user.id === prompt.creator?._id && pathName === "/profile" && (
+          <CreatorActions handleDeleteOnClick={() => {}} handleEditOnClick={() => {}} />
+        )}
+      </div>
     </div>
   );
 }

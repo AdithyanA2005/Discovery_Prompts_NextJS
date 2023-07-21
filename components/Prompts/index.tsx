@@ -10,9 +10,10 @@ type Props = {
   prompts: IPromptWithCreatorPopulated[];
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  searchBarPlaceholder: string;
 };
 
-export default function Prompts({ prompts, loading, searchValue, setSearchValue }: Props) {
+export default function Prompts({ prompts, loading, searchValue, setSearchValue, searchBarPlaceholder }: Props) {
   const clearSearchValue = () => setSearchValue("");
   const searchValueOnChange = (e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value);
 
@@ -23,7 +24,7 @@ export default function Prompts({ prompts, loading, searchValue, setSearchValue 
         {/* Search bar input */}
         <input
           type="text"
-          placeholder="Search Prompts or #tag or @user"
+          placeholder={searchBarPlaceholder}
           className="input input-bordered input-accent w-full"
           value={searchValue}
           onChange={searchValueOnChange}

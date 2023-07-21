@@ -5,7 +5,7 @@ type Props = {
 
 export default function CreatorActions({ handleEditOnClick, handleDeleteOnClick }: Props) {
   return (
-    <div className="mt-5 flex gap-5 justify-end border-t border-primary pt-3">
+    <div className="flex gap-5 justify-end">
       {/* Edit Btn */}
       <div className="tooltip" data-tip="Edit">
         <button

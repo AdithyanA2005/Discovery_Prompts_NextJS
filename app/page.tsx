@@ -12,7 +12,9 @@ export default async function Page() {
       />
 
       {/* Prompt Feeds Section */}
-      <FeedsSection />
+      <FeedsSection
+        searchBarPlaceholder="Search Prompts or #tag or @user"
+      />
     </>
   )
 }

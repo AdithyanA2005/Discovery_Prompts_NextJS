@@ -6,9 +6,11 @@ import { fetchPrompts } from "@/utils/api";
 import { useEffect, useState } from "react";
 import Prompts from "../Prompts";
 
-type Props = {};
+type Props = {
+  searchBarPlaceholder: string;
+};
 
-export default function FeedsSection({ }: Props) {
+export default function FeedsSection({ searchBarPlaceholder }: Props) {
   // State variable to denote if prompts are being loaded
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -39,6 +41,7 @@ export default function FeedsSection({ }: Props) {
       loading={loading}
       searchValue={searchQuery}
       setSearchValue={setSearchQuery}
+      searchBarPlaceholder={searchBarPlaceholder}
     />
   )
 }

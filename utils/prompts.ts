@@ -1,6 +1,6 @@
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
-export function filterPromptsBySearchQuery(prompts: IPromptWithCreatorPopulated[], searchQuery: string) {
+export function filterPromptsBySearchQuery(prompts: IPromptWithCreatorPopulated[], searchQuery: string, disableUserSearch?: boolean) {
   const checkIsQueryInUserName = (prompt: IPromptWithCreatorPopulated): boolean => {
     return prompt
       .creator
@@ -58,10 +58,12 @@ export function filterPromptsBySearchQuery(prompts: IPromptWithCreatorPopulated[
 
   let filteredPrompts = prompts.filter((prompt): boolean => {
     // If query starts with `@` then search for prompt by query user
-    if (searchQuery.startsWith("@")) return checkIsQueryInUserName(prompt) || checkIsQueryInUserEmail(prompt);
+    if (!disableUserSearch && searchQuery.startsWith("@")) 
+      return checkIsQueryInUserName(prompt) || checkIsQueryInUserEmail(prompt);
 
     // If query starts with `#` then search for prompt by tag
-    if (searchQuery.startsWith("#")) return checkIsQueryInPromptTag(prompt);
+    if (searchQuery.startsWith("#")) 
+      return checkIsQueryInPromptTag(prompt);
 
     // Filter query and search for prompt by prompt
     return checkIsQueryInPromptContent(prompt);
