@@ -1,6 +1,7 @@
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 type Props = {
   userName: string | undefined;
@@ -8,11 +9,20 @@ type Props = {
 };
 
 export default function AccountActionsDropdown({ userName, userImage }: Props) {
-  // This function will retunn the intials for a given name
+  // This function will return the intials for a given name
   const getInitials = (name: string): string => {
     const names = name.split(" ");
     const initials = names.map((n) => n.charAt(0).toUpperCase()).join("");
     return initials || "😊";
+  };
+
+  // This function will handle SignOut and show toasts
+  const handleSignOut = () => {
+    toast.promise(signOut(), {
+      error: "Unable to Sign Out",
+      pending: "Signing Out",
+      success: "Sign Out Successful",
+    });
   };
 
   return (
@@ -49,7 +59,7 @@ export default function AccountActionsDropdown({ userName, userImage }: Props) {
 
         {/* Logout btn */}
         <li>
-          <button onClick={() => signOut()} className="hover:text-accent">
+          <button onClick={handleSignOut} className="hover:text-accent">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>
             <span>Logout</span>
           </button>

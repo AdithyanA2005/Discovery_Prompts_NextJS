@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 type Props = {};
 
 export default function BackBtn({}: Props) {
+  // Router to navigate within pages
   const router = useRouter();
+
+  // When clicked we will be redirected to the previous route
   const handleOnClick = () => router.back();
 
   return (

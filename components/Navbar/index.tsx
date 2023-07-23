@@ -1,12 +1,13 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { getProviders, signIn, useSession } from "next-auth/react";
-import SpecialBtn from "./SpecialBtn";
 import AccountActionsDropdown from "./AccountActionsDropdown";
-import BackBtn from "./BackBtn";
+import SpecialBtn from "./SpecialBtn";
 import NavBrand from "./NavBrand";
+import BackBtn from "./BackBtn";
+import { toast } from "react-toastify";
 
 interface NextAuthProvidersResponse {
   [provider: string]: {
@@ -16,15 +17,22 @@ interface NextAuthProvidersResponse {
     signinUrl: string;
     type: string;
   };
-}
+};
 
 export default function Navbar() {
+  // Router to navigate within pages
   const router = useRouter();
+
+  // The current pathname or route
   const pathname = usePathname();
+
+  // Define session which store auth
   const { data: session, status } = useSession();
+
+  // NextAuth Authentication Providers
   const [providers, setProviders] = useState<NextAuthProvidersResponse | null>(null);
 
-  // Get and setup the providers
+  // Get NextAuth providers and set it to state variable
   useEffect(() => {
     const getAndSetUpProviders = async () => {
       const response: NextAuthProvidersResponse | null = await getProviders();
@@ -33,6 +41,13 @@ export default function Navbar() {
 
     getAndSetUpProviders();
   }, []);
+
+  // When authenticated it will show a success toast
+  useEffect(() => {
+    if (status === "authenticated") {
+      toast.success(`Succcessfully logged in as ${session?.user.name}`);
+    };
+  }, [status]);
 
   return (
     <nav className="navbar justify-between mt-2 h-10 bg-base-100">
@@ -62,7 +77,7 @@ export default function Navbar() {
         ) : (
           <div>
             <SpecialBtn
-              text="Start Discovering"
+              text="Log In / Register"
               onClick={() => signIn(providers?.google.id)}
               disabled={!providers || !providers.google}
             />
