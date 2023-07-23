@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
-import { filterPromptsBySearchQuery } from "@/utils/prompts";
-import { fetchPrompts } from "@/utils/api";
 import { useEffect, useState } from "react";
+import { fetchPrompts } from "@/utils/api";
+import { filterPromptsBySearchQuery } from "@/utils/prompts";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import Prompts from "../Prompts";
 
 type Props = {
@@ -26,9 +26,14 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
   // Fetch fresh prompts when a page is loaded
   useEffect(() => {
     const fetchPosts = async () => {
+      // Set loading to true before starting fetching
       setLoading(true);
-      const data = await fetchPrompts();
-      setPrompts(data);
+
+      // Fetch prompts and store it in state variable
+      const fetchedPrompts = await fetchPrompts();
+      setPrompts(fetchedPrompts);
+
+      // Set loading to false after fetching
       setLoading(false);
     };
 
@@ -43,5 +48,5 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
       setSearchValue={setSearchQuery}
       searchBarPlaceholder={searchBarPlaceholder}
     />
-  )
+  );
 }

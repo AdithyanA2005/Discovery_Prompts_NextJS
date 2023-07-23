@@ -1,5 +1,5 @@
-import FeedsSection from "@/components/FeedsSection";
 import HeroSection from "@/components/HeroSection";
+import FeedsSection from "@/components/FeedsSection";
 
 export default async function RootPage() {
   return (
@@ -16,5 +16,5 @@ export default async function RootPage() {
         searchBarPlaceholder="Search Prompts or #tag or @user"
       />
     </>
-  )
+  );
 }
