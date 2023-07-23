@@ -1,19 +1,22 @@
 import Prompt from "@/models/prompt";
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import { connectToDB } from "@/utils/database";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // Try to connect to mongodb
     await connectToDB();
 
-    // Creating the new prompt in db
-    const prompts: IPromptWithCreatorPopulated[] = await Prompt.find({}).populate("creator");
+    // Get list of prompts with the creator field populated
+    const prompts: IPromptWithCreatorPopulated[] = await Prompt
+      .find({})
+      .populate("creator");
 
-    // Return new promt as a response
+    // Return new promts as a response
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {
-    console.log(error)
+    // If any error occured log it and send a err response
+    console.log(error);
     return new Response("Failed to fetch prompts", { status: 500 });
   }
 }

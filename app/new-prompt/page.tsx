@@ -7,11 +7,18 @@ import PromptFormSection from "@/components/PromptFormSection";
 import { ICreatePromptRequestBody } from "@/types/prompt";
 
 export default function NewPromptPage({ }: {}) {
+  // Define router to navigate within pages
   const router = useRouter();
+
+  // Define session which store auth
   const { data: session } = useSession();
+
+  // State varible denoting whether the form is being submitted
+  const [submitting, setSubmitting] = useState<boolean>(false);
+
+  // State variable storing the promt and tag
   const [tag, setTag] = useState<string>("");
   const [prompt, setPrompt] = useState<string>("");
-  const [submitting, setSubmitting] = useState<boolean>(false);
 
   // Handle form reset
   const handleReset = () => {
@@ -27,9 +34,18 @@ export default function NewPromptPage({ }: {}) {
     setSubmitting(true);
 
     try {
-      // Call the api
-      const reqBody: ICreatePromptRequestBody = { userId: session?.user.id || "", prompt, tag };
-      const reqConfig: RequestInit = { method: "POST", body: JSON.stringify(reqBody) };
+      // Call the api to create a new promtp
+      const reqBody: ICreatePromptRequestBody = {
+        userId: session?.user.id || "",
+        prompt,
+        tag,
+      };
+
+      const reqConfig: RequestInit = {
+        method: "POST",
+        body: JSON.stringify(reqBody),
+      };
+
       const response: Response = await fetch("/api/prompts/new", reqConfig);
 
       // Return to homepage if request is successfull

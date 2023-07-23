@@ -1,7 +1,7 @@
 import FeedsSection from "@/components/FeedsSection";
 import HeroSection from "@/components/HeroSection";
 
-export default async function Page() {
+export default async function RootPage() {
   return (
     <>
       {/* Hero Section */}

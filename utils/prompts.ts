@@ -1,5 +1,6 @@
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
+// This function can filter out prompts according to a search query
 export function filterPromptsBySearchQuery(prompts: IPromptWithCreatorPopulated[], searchQuery: string, disableUserSearch?: boolean) {
   const checkIsQueryInUserName = (prompt: IPromptWithCreatorPopulated): boolean => {
     return prompt
