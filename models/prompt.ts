@@ -5,6 +5,7 @@ const promptSchema: Schema<IPrompt> = new Schema<IPrompt>({
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   prompt: {
     type: String,

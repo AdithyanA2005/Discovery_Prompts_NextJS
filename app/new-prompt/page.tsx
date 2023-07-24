@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import PromptFormSection from "@/components/PromptFormSection";
-import { ICreatePromptRequestBody } from "@/types/prompt";
+import { createNewPrompt } from "@/utils/api";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
 export default function NewPromptPage({ }: {}) {
   // Define router to navigate within pages
@@ -28,35 +29,22 @@ export default function NewPromptPage({ }: {}) {
 
   // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
+    // Prevent the default form actions
     e.preventDefault();
 
-    // Before starting set submitting (loading) to true 
+    // Set submitting/loading to true before starting fetching
     setSubmitting(true);
 
-    try {
-      // Call the api to create a new promtp
-      const reqBody: ICreatePromptRequestBody = {
-        userId: session?.user.id || "",
-        prompt,
-        tag,
-      };
+    // Creat the new prompt and return to homepage
+    const promptPost: IPromptWithCreatorPopulated | null = await createNewPrompt(
+      session?.user.id || "", 
+      prompt, 
+      tag
+    );
+    if (promptPost) router.push("/");
 
-      const reqConfig: RequestInit = {
-        method: "POST",
-        body: JSON.stringify(reqBody),
-      };
-
-      const response: Response = await fetch("/api/prompts/new", reqConfig);
-
-      // Return to homepage if request is successfull
-      if (response.ok) router.push("/");
-    } catch (error) {
-      // Log any errors if it occured
-      console.log(error);
-    } finally {
-      // Finally set submitting to false after executing all it
-      setSubmitting(false);
-    }
+    // Set submitting/loading to false after fetching
+    setSubmitting(false);
   };
 
   return (
@@ -70,5 +58,5 @@ export default function NewPromptPage({ }: {}) {
       handleReset={handleReset}
       handleSubmit={handleSubmit}
     />
-  )
+  );
 }
