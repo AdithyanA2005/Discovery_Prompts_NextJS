@@ -1,24 +1,15 @@
-"use client"
+"use client";
 
-import { useEffect } from "react";
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation";
-import Loader from "@/components/Loader";
+import SignInToAccessSection from "@/components/SignInToAccessSection";
 
 export default function NewPromptLayout({ children }: { children: React.ReactNode }) {
-  // Define router to navigate within pages
-  const router = useRouter();
-
   // Define session which store auth
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    if (!session?.user) router.push("/");
-  }, [session, router]);
+  const { status } = useSession();
 
   return (
-    session?.user
+    status === "authenticated"
       ? children
-      : <Loader/>
-  )
+      : <SignInToAccessSection />
+  );
 }

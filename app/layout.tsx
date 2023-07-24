@@ -20,10 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthSessionProvider>
           <div className="w-[95%] md:w-[90%] lg:w-[80%] mx-auto ">
-            <div className="min-h-screen">
+            <div className="min-h-screen flex flex-col">
               <Navbar />
 
-              <main>
+              <main className="flex-1 flex flex-col">
                 {children}
               </main>
             </div>
