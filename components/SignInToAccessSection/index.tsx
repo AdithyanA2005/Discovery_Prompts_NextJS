@@ -1,37 +1,17 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import useProviders from "@/hooks/useProviders";
 
 type Props = {};
-
-interface NextAuthProvidersResponse {
-  [provider: string]: {
-    callbackUrl: string;
-    id: string;
-    name: string;
-    signinUrl: string;
-    type: string;
-  };
-};
 
 export default function SignInToAccessSection({ }: Props) {
   // The current pathname or route
   const pathname = usePathname();
 
   // NextAuth Authentication Providers
-  const [providers, setProviders] = useState<NextAuthProvidersResponse | null>(null);
-
-  // Get NextAuth providers and set it to state variable
-  useEffect(() => {
-    const getAndSetUpProviders = async () => {
-      const response: NextAuthProvidersResponse | null = await getProviders();
-      setProviders(response);
-    };
-
-    getAndSetUpProviders();
-  }, []);
+  const providers = useProviders();
 
   return (
     <section className="mt-[10vh] flex items-center justify-center flex-col">
@@ -41,9 +21,10 @@ export default function SignInToAccessSection({ }: Props) {
         </h1>
 
         <button
-          onClick={() => signIn(providers?.google.id, {callbackUrl: pathname})}
+          onClick={() => signIn(providers?.google.id, { callbackUrl: pathname })}
           disabled={!providers || !providers.google}
-          className="btn btn-primary btn-lg w-full max-w-sm">
+          className="btn btn-primary btn-lg w-full max-w-sm"
+        >
           Sign In / Register
         </button>
       </div>

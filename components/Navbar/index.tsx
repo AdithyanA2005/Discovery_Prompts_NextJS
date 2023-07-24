@@ -1,23 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import useProviders from "@/hooks/useProviders";
 import AccountActionsDropdown from "./AccountActionsDropdown";
 import SpecialBtn from "./SpecialBtn";
 import NavBrand from "./NavBrand";
 import BackBtn from "./BackBtn";
-import { toast } from "react-toastify";
 
-interface NextAuthProvidersResponse {
-  [provider: string]: {
-    callbackUrl: string;
-    id: string;
-    name: string;
-    signinUrl: string;
-    type: string;
-  };
-};
 
 export default function Navbar() {
   // Router to navigate within pages
@@ -30,17 +22,7 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   // NextAuth Authentication Providers
-  const [providers, setProviders] = useState<NextAuthProvidersResponse | null>(null);
-
-  // Get NextAuth providers and set it to state variable
-  useEffect(() => {
-    const getAndSetUpProviders = async () => {
-      const response: NextAuthProvidersResponse | null = await getProviders();
-      setProviders(response);
-    };
-
-    getAndSetUpProviders();
-  }, []);
+  const providers = useProviders();
 
   // When authenticated it will show a success toast
   useEffect(() => {
