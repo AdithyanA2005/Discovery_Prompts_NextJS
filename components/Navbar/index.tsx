@@ -46,7 +46,6 @@ export default function Navbar() {
               <SpecialBtn
                 text="Write New Prompt"
                 onClick={() => router.push("/new-prompt")}
-                disabled={false}
               />
             )}
 
@@ -62,6 +61,7 @@ export default function Navbar() {
               text="Log In / Register"
               onClick={() => signIn(providers?.google.id)}
               disabled={!providers || !providers.google}
+              loading={status === "loading"}
             />
           </div>
         )}

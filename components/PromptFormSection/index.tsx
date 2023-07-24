@@ -68,7 +68,8 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
         <div className="mt-4 flex gap-4">
           {/* Submit button */}
           <button type="submit" disabled={submitting} className="btn btn-primary btn-outline font-semibold">
-            {submitting ? "Creating Prompt ..." : "Create Prompt"}
+            {submitting ? "Creating Prompt" : "Create Prompt"}
+            {submitting && <span className="loading loading-dots loading-xs" />}
           </button>
 
           {/* Reset button */}
