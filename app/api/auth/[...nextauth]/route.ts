@@ -30,7 +30,7 @@ const signIn = async ({profile}: {profile?: Profile}) => {
 
     // Check if the user already exists
     const userExists = await User.findOne({ email: profile?.email });
-    console.log(profile)
+
     // Create new user if not already exists
     if (!userExists) await User.create({
       email: profile?.email,
