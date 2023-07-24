@@ -53,6 +53,7 @@ export default function Navbar() {
             <AccountActionsDropdown
               userImage={session.user.image ?? undefined}
               userName={session.user.name ?? undefined}
+              userId={session.user.id ?? undefined}
             />
           </div>
         ) : (

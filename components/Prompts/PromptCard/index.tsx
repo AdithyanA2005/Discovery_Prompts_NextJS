@@ -71,7 +71,7 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
 
         {/* TODO: Implement `Edit` & `Delete` functionalitites */}
         {/* Profile Page Only Edit and Delete Btns*/}
-        {session?.user.id === prompt.creator?._id && pathName === "/profile" && (
+        {session?.user.id === prompt.creator?._id && pathName.includes("/profile") && (
           <CreatorActions handleDeleteOnClick={() => {}} handleEditOnClick={() => {}} />
         )}
       </div>

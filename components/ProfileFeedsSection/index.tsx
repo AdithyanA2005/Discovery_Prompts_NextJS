@@ -1,20 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import Prompts from "../Prompts";
 import { fetchUserPrompts } from "@/utils/api";
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import { filterPromptsBySearchQuery } from "@/utils/prompts";
+import Prompts from "../Prompts";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
 type Props = {
+  userId: string;
   searchBarPlaceholder: string;
 };
 
-export default function ProfileFeedsSection({ searchBarPlaceholder }: Props) {
-  // Define session which store auth
-  const { data: session } = useSession();
-
+export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Props) {
   // State variable to denote if prompts are being loaded
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -36,13 +33,12 @@ export default function ProfileFeedsSection({ searchBarPlaceholder }: Props) {
     const fetchPosts = async () => {
       // Set Loading to true before starting to fetch
       setLoading(true);
-      console.log(session?.user.id);
+
       // Fetch prompt of a specific user
-      // NOTE: Session.user.id will be there because it is checked in the layout file
-      const data = await fetchUserPrompts(session?.user.id || "");
+      const fetchedPrompts = await fetchUserPrompts(userId);
 
       // Set prompt to fetched data and set loading to false
-      setPrompts(data);
+      setPrompts(fetchedPrompts);
       setLoading(false);
     };
 
@@ -51,7 +47,7 @@ export default function ProfileFeedsSection({ searchBarPlaceholder }: Props) {
 
   return (
     <>
-      <h1 className="text-4xl text-accent text-center font-semibold mb-12">Your Prompts</h1>
+      <h1 className="text-4xl text-accent text-center font-semibold mb-12">Prompts</h1>
 
       <Prompts
         prompts={filteredPrompts}
