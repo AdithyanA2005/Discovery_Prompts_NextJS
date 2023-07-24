@@ -1,15 +1,14 @@
 "use client";
 
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
 import SignInToAccessSection from "@/components/SignInToAccessSection";
+import Loader from "@/components/Loader";
 
 export default function NewPromptLayout({ children }: { children: React.ReactNode }) {
-  // Define session which store auth
+  // Status will store the next-auth status
   const { status } = useSession();
 
-  return (
-    status === "authenticated"
-      ? children
-      : <SignInToAccessSection />
-  );
+  if (status === "loading") return <Loader />;
+  if (status === "unauthenticated") return <SignInToAccessSection />;
+  return children;
 }
