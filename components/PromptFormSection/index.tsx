@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent } from "react";
 import { ETag } from "@/types/tag";
+import FormLabel from "./FormLabel";
 
 type Props = {
   type: string;
@@ -7,10 +8,10 @@ type Props = {
   tag: string;
   submitting: boolean;
   handleSubmit: (e: FormEvent) => Promise<void>;
-  handleReset: () => void;
+  handleReset: (e: FormEvent) => void;
   setTag: React.Dispatch<React.SetStateAction<string>>;
   setPrompt: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
 export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt, submitting, handleReset, handleSubmit }: Props) {
   const handlePromptChange = (e: ChangeEvent<HTMLTextAreaElement>) => setPrompt(e.target.value);
@@ -18,7 +19,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
   const tagOptions = Object.values(ETag);
 
   return (
-    <section className="px-1.5 my-[3vh] sm:my-[5vh] w-full max-w-4xl mx-auto text-white">
+    <section className="px-1.5 my-[3vh] sm:my-[5vh] w-full max-w-4xl mx-auto">
       <h1 className="text-primary mb-6 font-bold text-2xl capitalize sm:text-3xl">
         {type} Your Prompt
       </h1>
@@ -26,21 +27,22 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
       <form onSubmit={handleSubmit} onReset={handleReset} className="flex flex-col gap-4">
         {/* Prompt Input */}
         <div>
-          <label htmlFor="prompt" className="block ml-2 mb-2">Prompt</label>
+          <FormLabel htmlFor="prompt" text="Prompts"/>
+
           <textarea
             id="prompt"
             rows={3}
             value={prompt}
             onChange={handlePromptChange}
             required={true}
-            className="textarea textarea-primary w-full placeholder:text-white bg-gray-900"
+            className="textarea font-semibold textarea-primary w-full placeholder:text-gray-200 text-gray-200 bg-gray-900"
             placeholder="Write your post here"
           />
         </div>
 
         {/* Tag Input */}
         <div>
-          <label htmlFor="tag" className="block ml-2 mb-2">Tag</label>
+          <FormLabel htmlFor="tag" text="Tag"/>
 
           <select
             id="tag"
@@ -48,9 +50,9 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
             placeholder='#Tag'
             required={true}
             onChange={handleTagChange}
-            className="select select-primary w-full bg-gray-900"
+            className="text-gray-200 select select-primary w-full bg-gray-900"
           >
-            <option className="text-gray-300" disabled value="">
+            <option className="text-gray-300" value="">
               Pick your #tag
             </option>
 
@@ -70,11 +72,11 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
           </button>
 
           {/* Reset button */}
-          <button type="reset" className="btn text-accent btn-ghost btn-primary">
-            Cancel
+          <button type="reset" className="btn text-primary btn-ghost btn-primary">
+            Reset
           </button>
         </div>
       </form>
     </section>
-  )
+  );
 }
