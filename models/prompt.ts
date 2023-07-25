@@ -1,5 +1,5 @@
 import { IPrompt } from "@/types/prompt";
-import { Model, Schema, Types, model, models } from "mongoose";
+import { Model, Schema, model, models } from "mongoose";
 
 const promptSchema: Schema<IPrompt> = new Schema<IPrompt>({
   creator: {

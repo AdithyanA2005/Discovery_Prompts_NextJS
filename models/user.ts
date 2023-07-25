@@ -14,6 +14,10 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
     required: true,
     unique: true
   },
+  promptCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const User: Model<IUser> = models.User || model("User", userSchema);
