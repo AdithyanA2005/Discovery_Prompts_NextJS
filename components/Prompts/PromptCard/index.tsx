@@ -1,14 +1,14 @@
 "use client";
 
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
-import { redirect, usePathname, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import Tag from "./Tag";
+import Prompt from "./Prompt";
+import CopyBtn from "./CopyBtn";
 import CreatorActions from "./CreatorActions";
 import CreatorDetails from "./CreatorDetails";
-import CopyBtn from "./CopyBtn";
-import Prompt from "./Prompt";
-import Tag from "./Tag";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
 type Props = {
   prompt: IPromptWithCreatorPopulated;
@@ -37,10 +37,6 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
 
   // Redirect user to appropriate profile page
   const redirectToProfiePage = () => {
-    // If user himself is the creator
-    if (prompt.creator._id === session?.user.id) router.push("/profile");
-
-    // If the cretor is not the user himself
     router.push(`/profile/${prompt.creator?._id}?name=${prompt.creator.name}`);
   };
 
