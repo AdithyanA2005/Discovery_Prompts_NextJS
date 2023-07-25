@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchUserPrompts } from "@/utils/api";
+import fetchUserPrompts from "@/utils/api/fetchUserPrompts";
 import { filterPromptsBySearchQuery } from "@/utils/prompts";
 import Prompts from "../Prompts";
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
+import { useSearchParams } from "next/navigation";
+import ProfileHeading from "../ProfileHeading";
 
 type Props = {
   userId: string;
@@ -12,6 +14,10 @@ type Props = {
 };
 
 export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Props) {
+  // Get profile users name
+  const searchParams = useSearchParams();
+  const userName: string | null = searchParams.get("name");
+
   // State variable to denote if prompts are being loaded
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -47,7 +53,7 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
 
   return (
     <>
-      <h1 className="text-4xl text-accent text-center font-semibold mb-12">Prompts</h1>
+      <ProfileHeading text1={userName} text2="Prompts" />
 
       <Prompts
         prompts={filteredPrompts}

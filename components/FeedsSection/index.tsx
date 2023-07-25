@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchPrompts } from "@/utils/api";
+import fetchPrompts from "@/utils/api/fetchPrompts";
 import { filterPromptsBySearchQuery } from "@/utils/prompts";
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import Prompts from "../Prompts";

@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import PromptFormSection from "@/components/PromptFormSection";
-import { createNewPrompt } from "@/utils/api";
+import createNewPrompt from "@/utils/api/createNewPrompt";
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
 export default function NewPromptPage({ }: {}) {
