@@ -10,7 +10,7 @@ export interface IPrompt extends Document {
 
 export interface IPromptWithCreatorPopulated extends IPrompt {
   creator: IUser;
-}
+};
 
 export interface ICreatePromptRequestBody {
   userId: Types.ObjectId | string;
