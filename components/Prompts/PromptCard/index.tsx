@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Tag from "./Tag";
@@ -9,6 +9,7 @@ import CopyBtn from "./CopyBtn";
 import CreatorActions from "./CreatorActions";
 import CreatorDetails from "./CreatorDetails";
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
+import deletePrompt from "@/utils/api/deletePrompt";
 
 type Props = {
   prompt: IPromptWithCreatorPopulated;
@@ -24,6 +25,9 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
 
   // Define session which store auth
   const { data: session } = useSession();
+
+
+  const cardRef = useRef<HTMLDivElement>(null);
 
   // State will store if the prompt is copied
   const [copiedStatus, setCopiedStatus] = useState<boolean>(false);
@@ -50,8 +54,17 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
     router.push(`/update-prompt/${prompt._id}`);
   };
 
+  // This function will take confirmation and then delete the prompt
+  const handleDeletePrompt = async () => {
+    const confirmed = confirm("Are you sure that you want to delete the prompt");
+    if (confirmed) {
+      await deletePrompt(prompt._id);
+      cardRef.current?.remove();
+    };
+  };
+
   return (
-    <div className="relative group break-inside-avoid bg-clip-padding backdrop-blur-lg backdrop-filter bg-primary bg-opacity-5 flex-1 p-6 pb-4 border rounded-lg border-primary">
+    <div ref={cardRef} className="relative group break-inside-avoid bg-clip-padding backdrop-blur-lg backdrop-filter bg-primary bg-opacity-5 flex-1 p-6 pb-4 border rounded-lg border-primary">
       {/* This will show the name, email and profile photo of the person who created the code */}
       <CreatorDetails
         name={prompt.creator.name}
@@ -73,7 +86,10 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
         {/* TODO: Implement `Edit` & `Delete` functionalitites */}
         {/* Profile Page Only Edit and Delete Btns*/}
         {session?.user.id === prompt.creator?._id && pathName.includes("/profile") && (
-          <CreatorActions handleDeleteOnClick={() => {}} handleEditOnClick={redirectToEditPage} />
+          <CreatorActions 
+            handleDeleteOnClick={handleDeletePrompt} 
+            handleEditOnClick={redirectToEditPage} 
+          />
         )}
       </div>
     </div>

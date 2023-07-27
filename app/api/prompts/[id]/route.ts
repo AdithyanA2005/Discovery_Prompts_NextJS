@@ -6,6 +6,26 @@ interface Params {
   id: string;
 };
 
+export async function DELETE(request: Request, { params }: { params: Params }) {
+  try {
+    // Try to connect to mongodb
+    await connectToDB();
+
+    // Find the prompt by id
+    const promptRemoved = await Prompt.findByIdAndRemove(params.id);
+
+    // If the prompt exists, delete it
+    if (promptRemoved) {
+      return new Response("Prompt Deleted", { status: 200 });
+    } else {
+      return new Response("Prompt Not Found", { status: 404 })
+    };
+  } catch (error) {
+    // If any error occured log it and send a err response
+    return new Response("Failed to delete the prompt", { status: 500 });
+  };
+}
+
 export async function GET(request: Request, { params }: { params: Params }) {
   try {
     // Try to connect to mongodb
