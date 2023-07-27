@@ -1,9 +1,9 @@
-import { ICreatePromptRequestBody, IPromptWithCreatorPopulated } from "@/types/prompt";
+import { IWritePromptRequestBody, IPromptWithCreatorPopulated } from "@/types/prompt";
 import { toast } from "react-toastify";
 
 // This function will create a new prompt and return the created prompt or null
 export default async function createNewPrompt(userId: string, promptText: string, tag: string): Promise<IPromptWithCreatorPopulated | null> {
-  const reqBody: ICreatePromptRequestBody = { prompt: promptText, userId, tag };
+  const reqBody: IWritePromptRequestBody = { prompt: promptText, userId, tag };
   const response: Response = await fetch("/api/prompts/new", {
     method: "POST",
     body: JSON.stringify(reqBody),

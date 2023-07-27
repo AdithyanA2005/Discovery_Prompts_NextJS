@@ -45,6 +45,11 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
     setSearchValue(prompt.tag);
   };
 
+  // This function will redirect us to the prompts update page
+  const redirectToEditPage = () => {
+    router.push(`/update-prompt/${prompt._id}`);
+  };
+
   return (
     <div className="relative group break-inside-avoid bg-clip-padding backdrop-blur-lg backdrop-filter bg-primary bg-opacity-5 flex-1 p-6 pb-4 border rounded-lg border-primary">
       {/* This will show the name, email and profile photo of the person who created the code */}
@@ -68,7 +73,7 @@ export default function PromptCard({ prompt, setSearchValue }: Props) {
         {/* TODO: Implement `Edit` & `Delete` functionalitites */}
         {/* Profile Page Only Edit and Delete Btns*/}
         {session?.user.id === prompt.creator?._id && pathName.includes("/profile") && (
-          <CreatorActions handleDeleteOnClick={() => {}} handleEditOnClick={() => {}} />
+          <CreatorActions handleDeleteOnClick={() => {}} handleEditOnClick={redirectToEditPage} />
         )}
       </div>
     </div>

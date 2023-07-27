@@ -1,11 +1,11 @@
 import User from "@/models/user";
 import Prompt from "@/models/prompt";
 import { connectToDB } from "@/utils/database";
-import { ICreatePromptRequestBody } from "@/types/prompt";
+import { IWritePromptRequestBody } from "@/types/prompt";
 
 export async function POST(request: Request) {
   // Extracting necessary data from request body
-  const { userId, prompt, tag }: ICreatePromptRequestBody = await request.json();
+  const { userId, prompt, tag }: IWritePromptRequestBody = await request.json();
 
   try {
     // Try to connect to mongodb

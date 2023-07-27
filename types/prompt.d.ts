@@ -12,7 +12,7 @@ export interface IPromptWithCreatorPopulated extends IPrompt {
   creator: IUser;
 };
 
-export interface ICreatePromptRequestBody {
+export interface IWritePromptRequestBody {
   userId: Types.ObjectId | string;
   prompt: string;
   tag: string;
