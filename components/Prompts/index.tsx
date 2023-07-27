@@ -1,9 +1,9 @@
 "use client";
 
-import { IPromptWithCreatorPopulated } from "@/types/prompt";
 import { ChangeEvent } from "react";
 import PromptCard from "./PromptCard";
-import Loader from "../Loader";
+import SectionLoader from "../Loader/SectionLoader";
+import { IPromptWithCreatorPopulated } from "@/types/prompt";
 
 type Props = {
   loading: boolean;
@@ -48,7 +48,7 @@ export default function Prompts({ prompts, loading, searchValue, setSearchValue,
       </div>
 
       {/* When prompts are not loaded */}
-      {loading && <Loader />}
+      {loading && <SectionLoader />}
 
       {/* Prompt Cards List */}
       {!loading && (

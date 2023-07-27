@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from "react";
 import { ETag } from "@/types/tag";
 import FormLabel from "./FormLabel";
+import LoaderDots from "../Loader/LoaderDots";
 
 type Props = {
   type: "Create" | "Update";
@@ -69,7 +70,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
           {/* Submit button */}
           <button type="submit" disabled={submitting} className="btn btn-primary btn-outline font-semibold">
             {submitting ? `${type.slice(0, -1)}ing Prompt` : `${type} Prompt`}
-            {submitting && <span className="loading loading-dots loading-xs" />}
+            {submitting && <LoaderDots />}
           </button>
 
           {/* Reset button */}
