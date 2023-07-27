@@ -18,6 +18,8 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
   // State varible denoting whether the form is being submitted
   const [submitting, setIsSubmitting] = useState(false);
 
+  // TODO: implement loading until initial values are loaded
+
   // State variable storing the new promt and tag
   const [tag, setTag] = useState<string>("");
   const [prompt, setPrompt] = useState<string>("");
@@ -56,8 +58,8 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
     // Update the prompt with new promt text and tag
     const updatedPrompt: IPromptWithCreatorPopulated | null = await updatePrompt(params.id, session?.user.id || "", prompt, tag);
     
-    // If any problem occured and updation was unsuccessful then redirect to "/" route
-    if (!updatedPrompt) router.push("/");
+    // Redirect to "/" route
+    if (updatedPrompt) router.back();
 
     // Finally set submitting/loading to false
     setIsSubmitting(false);
@@ -71,7 +73,7 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
 
   return (
     <PromptFormSection
-      type="Edit"
+      type="Update"
       tag={tag}
       prompt={prompt}
       setTag={setTag}

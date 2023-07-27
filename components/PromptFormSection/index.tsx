@@ -3,7 +3,7 @@ import { ETag } from "@/types/tag";
 import FormLabel from "./FormLabel";
 
 type Props = {
-  type: string;
+  type: "Create" | "Update";
   prompt: string,
   tag: string;
   submitting: boolean;
@@ -68,7 +68,7 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
         <div className="mt-4 flex gap-4">
           {/* Submit button */}
           <button type="submit" disabled={submitting} className="btn btn-primary btn-outline font-semibold">
-            {submitting ? "Creating Prompt" : "Create Prompt"}
+            {submitting ? `${type.slice(0, -1)}ing Prompt` : `${type} Prompt`}
             {submitting && <span className="loading loading-dots loading-xs" />}
           </button>
 
