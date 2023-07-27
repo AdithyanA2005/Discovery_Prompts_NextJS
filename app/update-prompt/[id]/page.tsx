@@ -7,6 +7,7 @@ import PromptFormSection from "@/components/PromptFormSection";
 import fetchPrompt from "@/utils/api/fetchPrompt";
 import updatePrompt from "@/utils/api/updatePrompt";
 import { IPromptWithCreatorPopulated } from "@/types/prompt";
+import { toast } from "react-toastify";
 
 export default function UpdatePromptPage({ params }: { params: { id: string } }) {
   // Router to navigate within pages
@@ -16,9 +17,10 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
   const { data: session } = useSession();
 
   // State varible denoting whether the form is being submitted
-  const [submitting, setIsSubmitting] = useState(false);
+  const [submitting, setIsSubmitting] = useState<boolean>(false);
 
-  // TODO: implement loading until initial values are loaded
+  // State variable denoting whether the data is being loaded
+  const [loading, setLoading] = useState<boolean>(true)
 
   // State variable storing the new promt and tag
   const [tag, setTag] = useState<string>("");
@@ -32,6 +34,10 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
   // On Intial load fetch the current data of the prompt and set it to state
   useEffect(() => {
     const getPromptDetails = async () => {
+      // Set loading to true before fetching prompt data
+      setLoading(true)
+
+      // Const fetch prompt
       const fetchedPrompt: IPromptWithCreatorPopulated | null = await fetchPrompt(params.id);
 
       // Set initial or the previous value of the prompt and tag
@@ -41,6 +47,15 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
       // State variable connected to input tag
       setPrompt(fetchedPrompt?.prompt || "");
       setTag(fetchedPrompt?.tag || "");
+
+      // Redirect to homepage if prompt creator is not the logged in user
+      if (fetchedPrompt?.creator._id !== session?.user.id) {
+        toast.error("You are not the creator of this prompt");
+        router.push("/");
+      };
+
+      // Set loading to false after fetching prompt data
+      setLoading(false)
     };
 
     getPromptDetails();
@@ -57,7 +72,7 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
 
     // Update the prompt with new promt text and tag
     const updatedPrompt: IPromptWithCreatorPopulated | null = await updatePrompt(params.id, session?.user.id || "", prompt, tag);
-    
+
     // Redirect to "/" route
     if (updatedPrompt) router.back();
 
@@ -73,12 +88,12 @@ export default function UpdatePromptPage({ params }: { params: { id: string } })
 
   return (
     <PromptFormSection
-      type="Update"
+      type="update"
       tag={tag}
       prompt={prompt}
       setTag={setTag}
       setPrompt={setPrompt}
-      submitting={submitting}
+      loading={loading || submitting}
       handleReset={handleReset}
       handleSubmit={handleSubmit}
     />

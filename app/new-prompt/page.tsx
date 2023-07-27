@@ -49,12 +49,12 @@ export default function NewPromptPage({ }: {}) {
 
   return (
     <PromptFormSection
-      type="Create"
+      type="create"
       prompt={prompt}
       setPrompt={setPrompt}
       tag={tag}
       setTag={setTag}
-      submitting={submitting}
+      loading={submitting}
       handleReset={handleReset}
       handleSubmit={handleSubmit}
     />

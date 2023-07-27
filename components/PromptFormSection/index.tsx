@@ -4,17 +4,17 @@ import FormLabel from "./FormLabel";
 import LoaderDots from "../Loader/LoaderDots";
 
 type Props = {
-  type: "Create" | "Update";
+  type: "create" | "update";
   prompt: string,
   tag: string;
-  submitting: boolean;
+  loading: boolean;
   handleSubmit: (e: FormEvent) => Promise<void>;
   handleReset: (e: FormEvent) => void;
   setTag: React.Dispatch<React.SetStateAction<string>>;
   setPrompt: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt, submitting, handleReset, handleSubmit }: Props) {
+export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt, loading, handleReset, handleSubmit }: Props) {
   const handlePromptChange = (e: ChangeEvent<HTMLTextAreaElement>) => setPrompt(e.target.value);
   const handleTagChange = (e: ChangeEvent<HTMLSelectElement>) => setTag(e.target.value);
   const tagOptions = Object.values(ETag);
@@ -34,10 +34,11 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
             id="prompt"
             rows={3}
             value={prompt}
+            disabled={loading}
             onChange={handlePromptChange}
             required={true}
             className="textarea font-semibold textarea-primary w-full placeholder:text-gray-200 text-gray-200 bg-gray-900"
-            placeholder="Write your post here"
+            placeholder={type === "create" ? "Write your post here" : "Loading prompt"}
           />
         </div>
 
@@ -48,7 +49,8 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
           <select
             id="tag"
             value={tag}
-            placeholder='#Tag'
+            disabled={loading}
+            placeholder={type === "create" ? "#Tag" : "Loading #Tag"}
             required={true}
             onChange={handleTagChange}
             className="text-gray-200 select select-primary w-full bg-gray-900"
@@ -68,13 +70,13 @@ export default function PromptFormSection({ type, tag, setTag, prompt, setPrompt
         {/* Action Buttons */}
         <div className="mt-4 flex gap-4">
           {/* Submit button */}
-          <button type="submit" disabled={submitting} className="btn btn-primary btn-outline font-semibold">
-            {submitting ? `${type.slice(0, -1)}ing Prompt` : `${type} Prompt`}
-            {submitting && <LoaderDots />}
+          <button type="submit" disabled={loading} className="btn btn-primary btn-outline font-semibold">
+            {prompt && tag && loading ? `${type.slice(0, -1)}ing Prompt` : `${type} Prompt`}
+            {prompt && tag && loading && <LoaderDots />}
           </button>
 
           {/* Reset button */}
-          <button type="reset" className="btn text-primary btn-ghost btn-primary">
+          <button type="reset" disabled={loading} className="btn text-primary btn-ghost btn-primary">
             Reset
           </button>
         </div>
