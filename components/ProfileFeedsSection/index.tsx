@@ -52,7 +52,7 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
   }, []);
 
   return (
-    <>
+    <section>
       <ProfileHeading text1={userName} text2="Prompts" />
 
       <Prompts
@@ -62,6 +62,6 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
         setSearchValue={setSearchQuery}
         searchBarPlaceholder={searchBarPlaceholder}
       />
-    </>
+    </section>
   );
 }
