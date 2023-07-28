@@ -11,9 +11,10 @@ type Props = {
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   searchBarPlaceholder: string;
+  loadMorePrompts: () => void;
 };
 
-export default function Prompts({ prompts, loading, searchValue, setSearchValue, searchBarPlaceholder }: Props) {
+export default function Prompts({ prompts, loading, searchValue, setSearchValue, searchBarPlaceholder, loadMorePrompts }: Props) {
   const clearSearchValue = () => setSearchValue("");
   const searchValueOnChange = (e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value);
 
@@ -47,20 +48,27 @@ export default function Prompts({ prompts, loading, searchValue, setSearchValue,
         </button>
       </div>
 
-      {/* When prompts are not loaded */}
+      {/* Prompt Cards List If prompts.length > 0*/}
+      {prompts.length ? (
+        <div className="mt-12 w-full space-y-5 py-8 sm:columns-2 xl:columns-3">
+          {prompts.map((prompt) => (
+            <PromptCard key={prompt._id} prompt={prompt} setSearchValue={setSearchValue} />
+          ))}
+        </div>
+      ) : null}
+
+      {/* If not loading and prompt is not found then show no prompts found */}
+      {!loading && !prompts.length && (<span className="mt-14 text-accent">No Prompts Found</span>)}
+
+      {/* When prompts are being loaded */}
       {loading && <SectionLoader />}
 
-      {/* Prompt Cards List */}
+      {/* Button to load more prompts */}
       {!loading && (
-        prompts.length ? (
-          <div className="mt-12 w-full space-y-5 py-8 sm:columns-2 xl:columns-3">
-            {prompts.map((prompt) => (
-              <PromptCard key={prompt._id} prompt={prompt} setSearchValue={setSearchValue} />
-            ))}
-          </div>
-        ) : (
-          <span className="mt-14 text-accent">No Prompts Found</span>
-        ))}
+        <button onClick={loadMorePrompts} className="btn btn-outline btn-accent">
+          Load More Prompts
+        </button>
+      )}
     </section>
   );
 }

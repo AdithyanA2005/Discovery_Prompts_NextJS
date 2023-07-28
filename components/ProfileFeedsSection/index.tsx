@@ -27,6 +27,13 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
   // State variable to store the query of the prompts search bar
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // State variables to store the prompts pagination
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+
+  // Function to load more prompts
+  const loadMorePrompts = () => setPage(prev => prev + 1);
+
   // State variable will store the prompts which are filtered according to search query
   let filteredPrompts: IPromptWithCreatorPopulated[] = filterPromptsBySearchQuery(
     prompts,
@@ -41,15 +48,15 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
       setLoading(true);
 
       // Fetch prompt of a specific user
-      const fetchedPrompts = await fetchUserPrompts(userId);
+      const fetchedPrompts = await fetchUserPrompts(userId, page, pageSize);
 
       // Set prompt to fetched data and set loading to false
-      setPrompts(fetchedPrompts);
+      setPrompts(prev => [...prev, ...fetchedPrompts]);
       setLoading(false);
     };
 
     fetchPosts();
-  }, []);
+  }, [page]);
 
   return (
     <section>
@@ -61,6 +68,7 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
         searchValue={searchQuery}
         setSearchValue={setSearchQuery}
         searchBarPlaceholder={searchBarPlaceholder}
+        loadMorePrompts={loadMorePrompts}
       />
     </section>
   );

@@ -20,6 +20,13 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
   // State variable to store the query of the prompts search bar
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // State variables to store the prompts pagination
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+
+  // Function to load more prompts
+  const loadMorePrompts = () => setPage(prev => prev + 1);
+
   // State variable will store the prompts which are filtered according to search query
   let filteredPrompts: IPromptWithCreatorPopulated[] = filterPromptsBySearchQuery(prompts, searchQuery);
 
@@ -30,15 +37,15 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
       setLoading(true);
 
       // Fetch prompts and store it in state variable
-      const fetchedPrompts = await fetchPrompts();
-      setPrompts(fetchedPrompts);
+      const fetchedPrompts = await fetchPrompts(page, pageSize);
+      setPrompts(prev => [...prev, ...fetchedPrompts]);
 
       // Set loading to false after fetching
       setLoading(false);
     };
 
     fetchPosts();
-  }, []);
+  }, [page]);
 
   return (
     <Prompts
@@ -47,6 +54,7 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
       searchValue={searchQuery}
       setSearchValue={setSearchQuery}
       searchBarPlaceholder={searchBarPlaceholder}
+      loadMorePrompts={loadMorePrompts}
     />
   );
 }
