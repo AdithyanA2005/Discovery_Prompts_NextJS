@@ -12,9 +12,10 @@ type Props = {
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   searchBarPlaceholder: string;
   loadMorePrompts: () => void;
+  morePromptsAvailable: boolean;
 };
 
-export default function Prompts({ prompts, loading, searchValue, setSearchValue, searchBarPlaceholder, loadMorePrompts }: Props) {
+export default function Prompts({ prompts, loading, searchValue, setSearchValue, searchBarPlaceholder, morePromptsAvailable, loadMorePrompts }: Props) {
   const clearSearchValue = () => setSearchValue("");
   const searchValueOnChange = (e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value);
 
@@ -64,7 +65,7 @@ export default function Prompts({ prompts, loading, searchValue, setSearchValue,
       {loading && <SectionLoader />}
 
       {/* Button to load more prompts */}
-      {!loading && (
+      {!loading && morePromptsAvailable && (
         <button onClick={loadMorePrompts} className="btn btn-outline btn-accent">
           Load More Prompts
         </button>

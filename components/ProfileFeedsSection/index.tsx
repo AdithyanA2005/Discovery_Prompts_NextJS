@@ -24,6 +24,9 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
   // State variable to store prompts that are to be displayed
   const [prompts, setPrompts] = useState<IPromptWithCreatorPopulated[]>([]);
 
+  // State variable denoting whether more prompts are available to load
+  const [morePromptsAvailable, setMorePromptsAvailable] = useState<boolean>(false);
+
   // State variable to store the query of the prompts search bar
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -47,11 +50,16 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
       // Set Loading to true before starting to fetch
       setLoading(true);
 
-      // Fetch prompt of a specific user
+      // Fetch prompt of a specific user and store it in state variable
       const fetchedPrompts = await fetchUserPrompts(userId, page, pageSize);
-
-      // Set prompt to fetched data and set loading to false
       setPrompts(prev => [...prev, ...fetchedPrompts]);
+
+      // Set if more prompts available 
+      console.log(fetchedPrompts.length)
+      if (fetchedPrompts.length < pageSize) setMorePromptsAvailable(false)
+      else setMorePromptsAvailable(true)
+
+      // Set loading to false after fetching
       setLoading(false);
     };
 
@@ -69,6 +77,7 @@ export default function ProfileFeedsSection({ userId, searchBarPlaceholder }: Pr
         setSearchValue={setSearchQuery}
         searchBarPlaceholder={searchBarPlaceholder}
         loadMorePrompts={loadMorePrompts}
+        morePromptsAvailable={morePromptsAvailable}
       />
     </section>
   );

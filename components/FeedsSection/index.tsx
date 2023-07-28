@@ -17,6 +17,9 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
   // State variable to store prompts that are to be displayed
   const [prompts, setPrompts] = useState<IPromptWithCreatorPopulated[]>([]);
 
+  // State variable denoting whether more prompts are available to load
+  const [morePromptsAvailable, setMorePromptsAvailable] = useState<boolean>(false);
+
   // State variable to store the query of the prompts search bar
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -40,6 +43,10 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
       const fetchedPrompts = await fetchPrompts(page, pageSize);
       setPrompts(prev => [...prev, ...fetchedPrompts]);
 
+      // Set if more prompts available 
+      if (fetchedPrompts.length < pageSize) setMorePromptsAvailable(false)
+      else setMorePromptsAvailable(true)
+
       // Set loading to false after fetching
       setLoading(false);
     };
@@ -55,6 +62,7 @@ export default function FeedsSection({ searchBarPlaceholder }: Props) {
       setSearchValue={setSearchQuery}
       searchBarPlaceholder={searchBarPlaceholder}
       loadMorePrompts={loadMorePrompts}
+      morePromptsAvailable={morePromptsAvailable}
     />
   );
 }
