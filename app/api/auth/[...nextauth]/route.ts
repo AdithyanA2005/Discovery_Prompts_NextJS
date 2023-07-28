@@ -1,5 +1,5 @@
 import NextAuth from "next-auth/next";
-import { Profile, Session } from "next-auth";
+import { Session } from "next-auth";
 import { Provider } from "next-auth/providers";
 import GoogleProvider from "next-auth/providers/google";
 import User from "@/models/user";
@@ -23,7 +23,7 @@ const session = async ({ session }: { session: Session }) => {
 };
 
 // Next Auth SignIn
-const signIn = async ({profile}: {profile?: Profile}) => {
+const signIn = async ({profile}: {profile?: any}) => {
   try {
     // Try to connect to the DB
     await connectToDB();
